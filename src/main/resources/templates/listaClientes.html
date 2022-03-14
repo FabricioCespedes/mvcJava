@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>TODO supply a title</title>
+        <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css} "/>
+        <link th:rel="stylesheet" th:href="@{/assets/jquery-steps/jquery.steps.css} "/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h1>Lista de clientes</h1>
+        <div th:if="${ clientes != null and !clientes.empty }">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th >Id</th>
+                        <th> Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Limite credito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cli:${clientes}">
+                        <td th:text="${cli.idCliente}"></td>
+                        <td th:text="${cli.nombre}"></td>
+                        <td th:text="${cli.apellido}"></td>
+                        <td th:text="${cli.email}"></td>
+                        <td th:text="${cli.telefono}"></td>
+                        <td th:text="${cli.limiteCredito}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div th:if="${clientes == null or clientes.empty}">
+            <p>No ahi clientes</p>
+        </div>
+    </body>
+</html>
