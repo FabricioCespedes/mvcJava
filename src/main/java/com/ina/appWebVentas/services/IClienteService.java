@@ -7,7 +7,7 @@ public interface IClienteService {
 
     public void guardar(Cliente cliente);
 
-    public void eliminar(Cliente cliente);
+    public Integer eliminar(Cliente cliente);
 
     public List<Cliente> listar();
 

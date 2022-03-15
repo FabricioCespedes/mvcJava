@@ -6,17 +6,33 @@ and open the template in the editor.
 -->
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+    <head th:replace="plantillas/plantilla1 ::head">
+        <title>Sistema de ventas</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="../static/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <h1>Sistema de ventas</h1>
-        <ol>
-            <li><a th:href="@{/clientes}">Cliente</a></li>
-            <li><a th:href="@{/productos}">Producto</a></li>
-        </ol>
+        <header th:replace="plantillas/plantilla1 ::header"></header>
+
+        <div class="container-lg">
+
+            <div class="container p-1 m-1">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5 class="card-title">Sistema de ventas</h5>
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-secondary" th:href="@{/clientes}">Cliente</a>
+                        <a class="btn btn-secondary" th:href="@{/productos}">Producto</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Todos los derechos reservados
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </body>
 </html>
