@@ -12,6 +12,17 @@
             <div class="card border-light" style="margin-top: 2%" >
                 <div class="card-header"> <h1>Lista de clientes</h1></div>
             </div>
+
+            <div th:if="${ msg != null and !msg.empty}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Mensaje:</strong> 
+                    <p th:text="${msg}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <span th:attr="msg=@{null}"></span>
+                </div>
+            </div>
+
+
             <div class="row align-items-center">
                 <form class="form" th:action="@{/filtrarClientes}" method="post">
                     <div class="input-group">
@@ -41,6 +52,7 @@
                             <th>Email</th>
                             <th>Telefono</th>
                             <th>Limite credito</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

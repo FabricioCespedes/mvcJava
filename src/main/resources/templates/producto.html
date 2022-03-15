@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="plantillas/plantilla1 ::head">
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <header th:replace="plantillas/plantilla1 ::header">
+        </header>
+        <div class = "container">
+            <h1 class="card-header">Datos del producto</h1>
+            <div class = "row justify-content-center">
+                <div class="col-12">
+                    <form th:action="@{/guardarProducto}" method="post" th:object="${producto}">
+                        <input type="hidden" name="idProducto" th:field="*{idProducto}"/>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion del producto</label>
+                            <input type="text" class="form-control" name="descripcion" th:field="*{descripcion}" />
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('descripcion')}"
+                                  th:errors="*{descripcion}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" step="0.01" class="form-control" name="precio" th:field="*{precio}" />
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('precio')}"
+                                  th:errors="*{precio}"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="existencia" class="form-label">Cantidad en inventario</label>
+                            <input type="number" step="1" class="form-control" name="existencia" th:field="*{existencia}" />
+                            <span class="text-danger font-italic"
+                                  th:if="${#fields.hasErrors('existencia')}"
+                                  th:errors="*{existencia}"></span>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <input type="submit" name="btnGuardar" value="Guardar" 
+                                      style="width: 98%" class="btn btn-secondary m-1 p-1 text-center"/>
+                            </div>
+                            <div class="col">
+                            <a th:href="@{/productos}" 
+                               class="btn btn-secondary m-1 p-1 text-center" style="width: 98%" >Regresar</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -14,33 +14,67 @@
                 <div class="card-header"> <h1>Lista de productos</h1></div>
             </div>
 
-            <div th:if="${ productos != null and !productos.empty }" >
-
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Descripcion</th>
-                            <th>Precio</th>
-                            <th>Cantidad en inventario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="prod:${productos}">
-                            <td th:text="${prod.idProducto}"></td>
-                            <td th:text="${prod.descripcion}"></td>
-                            <td th:text="${prod.precio}"></td>
-                            <td th:text="${prod.existencia}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
+            <div th:if="${ msg != null and !msg.empty}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Mensaje:</strong> 
+                    <p th:text="${msg}"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <span th:attr="msg=@{null}"></span>
+                </div>
             </div>
-            <div th:if="${productos == null or productos.empty}">
-                <p>No ahi productos</p>
+                <div class="row align-items-center">
+                    <form class="form" style="margin-top: 2%; margin-bottom: 2%" th:action="@{/filtrarProductos}" method="post">
+                        <div class="input-group">
+                            <div class="col">
+                                <input type="text" name="txtDescripcion" 
+                                       placeholder="Ingrese aqui la descripcion del producto" 
+                                       class="form-control" 
+                                       />
+                            </div>
+                            <div  class="col col-lg-2">
+                                <input style="width: 200px"  type="submit" name="btnBuscar" value="Buscar" class="btn btn-secondary mx-auto" />
+                            </div>
+                            <div  class="col col-lg-2">
+                                <a style="width: 200px" class="btn btn-secondary mx-auto" th:href="@{/nuevoProducto}"><i class="fas fa-user-plus"></i>Nuevo</a>
+                            </div> 
+                        </div>
+                    </form>
+
+                </div>
+
+
+                <div th:if="${ productos != null and !productos.empty }" >
+
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Descripcion</th>
+                                <th>Precio</th>
+                                <th>Cantidad en inventario</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="prod:${productos}">
+                                <td th:text="${prod.idProducto}"></td>
+                                <td th:text="${prod.descripcion}"></td>
+                                <td th:text="${prod.precio}"></td>
+                                <td th:text="${prod.existencia}"></td>
+                                <td>
+                                    <a th:href="@{/editarProducto/} + ${prod.idProducto}"><i class="fas fa-user-edit"></i>Editar</a>
+                                    <a th:href="@{/eliminarProducto/} + ${prod.idProducto}"><i class="fas fa-user-times"></i>Eliminar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div th:if="${productos == null or productos.empty}">
+                    <p>No ahi productos</p>
+                </div>
             </div>
-        </div>
 
     </body>
 </html>

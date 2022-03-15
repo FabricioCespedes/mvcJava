@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ClientesController {
@@ -36,31 +37,32 @@ public class ClientesController {
     }
 
     @PostMapping("/guardarCliente")
-    public String guardar(@Valid Cliente cliente, Errors er) {
+    public String guardar(@Valid Cliente cliente, Errors er, RedirectAttributes atts) {
         if (er.hasErrors()) {
             return "cliente";
         }
-
         servicioCliente.guardar(cliente);
+        String msg = "Cliente guardado con exito";
+        atts.addFlashAttribute("msg", msg);
         return "redirect:/clientes";
     }
 
     @GetMapping("/editarCliente/{idCliente}")
-    public String editar(Cliente cliente, Model model) {
+    public String editar(Cliente cliente, Model model, RedirectAttributes atts) {
         cliente = servicioCliente.obtenerCliente(cliente.getIdCliente());
+        String msg = "";
         if (cliente != null) {
             model.addAttribute("cliente", cliente);
             return "cliente";
         }
-        List<Cliente> lista = servicioCliente.listar();
-        String msg = "No se logro cargar el cliente";
-        model.addAttribute("clientes", lista);
-        model.addAttribute("msg", msg);
-        return "listaClientes";
+        msg = "No se logro cargar el cliente";
+        atts.addFlashAttribute("msg", msg);
+        return "redirect:/listaClientes";
+
     }
 
     @GetMapping("/eliminarCliente")
-    public String eliminar(Cliente cliente, Model model) {
+    public String eliminar(Cliente cliente, Model model, RedirectAttributes atts) {
         String msg = "";
         int resultado = servicioCliente.eliminar(cliente);
         if (resultado == 0) {
@@ -68,10 +70,7 @@ public class ClientesController {
         } else {
             msg = "Cliente eliminado";
         }
-        List<Cliente> lista = servicioCliente.listar();
-
-        model.addAttribute("clientes", lista);
-        model.addAttribute("msg", msg);
-        return "listaClientes";
+        atts.addFlashAttribute("msg", msg);
+        return "redirect:/listaClientes";
     }
 }
