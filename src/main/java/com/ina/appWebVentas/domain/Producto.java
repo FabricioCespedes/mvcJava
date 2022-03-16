@@ -1,6 +1,7 @@
 package com.ina.appWebVentas.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import lombok.Data;
@@ -30,4 +31,7 @@ public class Producto implements Serializable {
     @Column(name = "existencia")
     @NotNull(message = "Debe de ingresar la cantidad existente del producto")
     private int existencia;
+    
+    @OneToMany(mappedBy = "producto")
+    private List<DetalleVenta> detalleVentas;
 }

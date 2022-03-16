@@ -8,34 +8,34 @@
     </head>
     <body>
         <header th:replace="plantillas/plantilla1 ::header"></header>
-
-        <div class="container-lg">
-            <div class="card border-light" style="margin-top: 2%" >
-                <div class="card-header"> <h1>Lista de productos</h1></div>
-            </div>
-
-            <div th:if="${ msg != null and !msg.empty}">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Mensaje:</strong> 
-                    <p th:text="${msg}"></p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <span th:attr="msg=@{null}"></span>
+        <div class="container-lg p-20 bg-warning">
+            <div class="container-lg" style="background-color: antiquewhite">
+                <div class="card border-0 bg-warning" style="margin-top: 2%" >
+                    <div class="card-header"> <h1>Lista de productos</h1></div>
                 </div>
-            </div>
+
+                <div th:if="${ msg != null and !msg.empty}">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Mensaje:</strong> 
+                        <p th:text="${msg}"></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <span th:attr="msg=@{null}"></span>
+                    </div>
+                </div>
                 <div class="row align-items-center">
                     <form class="form" style="margin-top: 2%; margin-bottom: 2%" th:action="@{/filtrarProductos}" method="post">
                         <div class="input-group">
                             <div class="col">
                                 <input type="text" name="txtDescripcion" 
                                        placeholder="Ingrese aqui la descripcion del producto" 
-                                       class="form-control" 
+                                       class="form-control" style="border-radius: 1%"
                                        />
                             </div>
                             <div  class="col col-lg-2">
-                                <input style="width: 200px"  type="submit" name="btnBuscar" value="Buscar" class="btn btn-secondary mx-auto" />
+                                <input style="width: 200px;border-radius: 1%"   type="submit" name="btnBuscar" value="Buscar" class="btn btn-warning mx-auto" />
                             </div>
                             <div  class="col col-lg-2">
-                                <a style="width: 200px" class="btn btn-secondary mx-auto" th:href="@{/nuevoProducto}"><i class="fas fa-user-plus"></i>Nuevo</a>
+                                <a style="width: 200px" class="btn btn-warning mx-auto" th:href="@{/nuevoProducto}"><i class="fas fa-user-plus"></i>Nuevo</a>
                             </div> 
                         </div>
                     </form>
@@ -75,6 +75,6 @@
                     <p>No ahi productos</p>
                 </div>
             </div>
-
+        </div>
     </body>
 </html>

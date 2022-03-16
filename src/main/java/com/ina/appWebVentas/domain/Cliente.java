@@ -1,6 +1,7 @@
 package com.ina.appWebVentas.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import lombok.Data;
@@ -35,5 +36,8 @@ public class Cliente implements Serializable {
     @Column(name = "limite_credito")
     @NotNull(message = "Debe de ingresar un limite de credito")
     private double limiteCredito;
+    
+    @OneToMany(mappedBy = "cliente")
+    private List<Venta> ventas;
 
 }
