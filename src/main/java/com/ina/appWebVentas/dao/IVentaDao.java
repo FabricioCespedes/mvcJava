@@ -11,6 +11,7 @@ import java.util.HashMap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public interface IVentaDao extends JpaRepository<Venta, Long>{
@@ -20,6 +21,7 @@ public interface IVentaDao extends JpaRepository<Venta, Long>{
     
     public Iterable<Venta> findByFecha(Calendar fecha);
     
+    @Transactional
     @Procedure(name="facturar")
     public HashMap facturar(
             @Param("TIPO") String tipo, 
@@ -29,4 +31,8 @@ public interface IVentaDao extends JpaRepository<Venta, Long>{
             @Param("PRECIO_VENTA") double precio,
             @Param("ID_VENTA") long idVenta,
             @Param("retorno") int retorno);
+    
+    @Transactional
+    @Procedure(name="[CANCELAR_FACTURA]",outputParameterName = "res")
+    Integer cancelar_factura(@Param("id_venta") Long idVenta);
 }

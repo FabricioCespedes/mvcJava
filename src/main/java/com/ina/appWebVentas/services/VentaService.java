@@ -1,5 +1,6 @@
 package com.ina.appWebVentas.services;
 
+import com.ina.appWebVentas.domain.Factura;
 import com.ina.appWebVentas.dao.IDetalleVentaDao;
 import com.ina.appWebVentas.dao.IProductoDao;
 import com.ina.appWebVentas.dao.IVentaDao;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VentaService implements IVentasService {
@@ -24,21 +26,25 @@ public class VentaService implements IVentasService {
     @Autowired
     private IProductoDao productoDao;
 
+    @Transactional(readOnly = true)
     @Override
     public List<Venta> listaVentas() {
         return ventaDao.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Venta> listaVentas(boolean cancelada) {
         return (List<Venta>) ventaDao.findByCancelada(cancelada);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Venta> listaVentas(Calendar fecha) {
         return (List<Venta>) ventaDao.findByFecha(fecha);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<DetalleVenta> listaDetalleVentas(long idVenta) {
         Venta venta = new Venta();
@@ -56,6 +62,7 @@ public class VentaService implements IVentasService {
         return detalleVentaDao.getById(id);
     }
 
+    @Transactional
     @Override
     public Factura guardar(Factura factura) {
         Producto producto = productoDao.findById(factura.getIdProducto()).orElse(null);
@@ -76,6 +83,7 @@ public class VentaService implements IVentasService {
     }
 
     @Override
+    @Transactional
     public void eliminar(Venta venta) {
         venta =  ventaDao.findById(venta.getIdVenta()).orElse(null);
         if (venta != null) {
@@ -86,6 +94,7 @@ public class VentaService implements IVentasService {
     }
 
     @Override
+    @Transactional
     public Factura eliminarDetalle(DetalleVenta detalleVenta) {
         detalleVenta = detalleVentaDao.findById(detalleVenta.getIdDetalle()).orElse(null);
         Factura factura = new Factura();
@@ -108,10 +117,9 @@ public class VentaService implements IVentasService {
     }
 
     @Override
-    public int pagarVenta(long idVenta) {
-        
-        TAREA!!!
-        return 0;
+    @Transactional
+    public int pagarVenta(long idVenta) {        
+        return ventaDao.cancelar_factura(idVenta);
     }
 
 

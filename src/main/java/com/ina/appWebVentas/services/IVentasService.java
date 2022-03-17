@@ -1,5 +1,6 @@
 package com.ina.appWebVentas.services;
 
+import com.ina.appWebVentas.domain.Factura;
 import com.ina.appWebVentas.domain.*;
 import java.util.Calendar;
 import java.util.List;
@@ -26,6 +27,4 @@ public interface IVentasService {
     
     public int pagarVenta(long idVenta);
     
-    
-
 }

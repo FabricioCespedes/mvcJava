@@ -1,6 +1,5 @@
-package com.ina.appWebVentas.services;
+package com.ina.appWebVentas.domain;
 
-import com.ina.appWebVentas.domain.DetalleVenta;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
