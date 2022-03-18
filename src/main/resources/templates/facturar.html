@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml">
-    <head th:replace="plantillas/plantilla1 ::head"> </head>
+    <head th:replace="plantillas/plantilla1 ::head">
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/></head>
     <body>
         <header th:replace="plantillas/plantilla1 ::header"></header>
         <div th:if="${ msg != null and !msg.empty}">
@@ -23,49 +25,56 @@
                         <div class="card-body">
                             <form th:action="@{/guardarFacturar}" method="post" th:object="${factura}">
                                 <input type="hidden" name="idVenta" th:field="*{idVenta}" />
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="tipo" class="form-label">Tipo de venta</label>
-                                        <select name="tipo" th:field="*{tipo}" class="form-select" aria-label="Tipos de ventas">
-                                            <option selected="">Abri el menu</option>
-                                            <option th:value="Credito">Credito</option>
-                                            <option th:value="Contado" th:selected="true">Contado</option>
-                                        </select>
-                                    </div>
+                                <div class="row p-1 m-1">
                                     <div class="col-8">
                                         <label for="nombreCliente" class="form-label">Cliente</label>
                                         <input type="hidden" name="idCliente" th:field="*{idCliente}" />
                                         <input required="true" class="form-control" type="text" name="nombreCliente" th:field="*{nombreCliente}" readonly="true" />                                        
                                     </div>  
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="input-group">
-                                            <input type="hidden" name="idProducto" th:field="*{idProducto}" />
-                                            <input required="true" id="NombreProducto" type="text" name="descripcion" th:field="*{descripcion}" 
-                                                   readonly="true" class="form-control"/>   
-                                            <a id="btnBuscarProducto" class="btn btn-warning" data-toggle="modal" data-targer="#modelProductos"><i class="fa-solid fa-binoculars"></i></a>
-                                            <label  for="cantidad" class="form-label">Cantidad</label>
-                                            <input required="true" type="number" class="form-control" name="cantidad"  value="1" th:field="*{cantidad}">
-                                            </input>
-
-                                        </div>
+                                    <div class="col-4">
+                                        <label for="tipo" class="form-label">Tipo de venta</label>
+                                        <select name="tipo" th:field="*{tipo}" class="form-select" aria-label="Tipos de ventas">
+                                            <option th:value="${Credito}" >Credito</option>
+                                            <option th:value="${Contado}" th:selected="true">Contado</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <button type="submit" name="btnGuardar" value="Agregar producto" class="btn btn-warning"></button>
+
+                                <div class="row p-1 m-1">
+                                    <div class="col-8">
+                                        <input type="hidden" name="idProducto" th:field="*{idProducto}" />
+                                        <label  for="descripcion" class="form-label">Seleccione un producto</label>
+                                        <div class="input-group mb-3">
+                                            <a id="btnBuscarProducto" class="btn btn-outline-secondary " data-toggle="modal" data-targer="#modelProductos"><i class="fas fa-search"></i>Buscar producto</a>
+                                            <input required="true" id="NombreProducto" type="text" name="descripcion" th:field="*{descripcion}" 
+                                                   readonly="true" class="form-control"/>   
+                                        </div>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <label  for="cantidad" class="form-label">Cantidad</label>
+                                        <input required="true" type="number" class="form-control" name="cantidad"  value="1" th:field="*{cantidad}">
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class="row p-1 m-1">
+
+                                    <div class="col-12">
+                                        <button type="submit" name="btnGuardar" value="Agregar producto" class="btn btn-warning mx-auto w-100 ">Agregar producto</button>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <span class="font-italic text-danger"
-                                          th:if="${#filds.hasError('nombreCliente')}"  
+                                          th:if="${#fields.hasErrors('nombreCliente')}"  
                                           th:errors="*{nombreCliente}"
                                           >Error</span>
                                     <span class="font-italic text-danger"
-                                          th:if="${#filds.hasError('descripcion')}"  
+                                          th:if="${#fields.hasErrors('descripcion')}"  
                                           th:errors="*{descripcion}"
                                           >Error</span>
                                     <span class="font-italic text-danger"
-                                          th:if="${#filds.hasError('cantidad')}"  
+                                          th:if="${#fields.hasErrors('cantidad')}"  
                                           th:errors="*{cantidad}"
                                           >Error</span>
                                 </div>
@@ -73,7 +82,7 @@
                         </div>
                         <div class="card-futter">
                             <h4>Detalles de factura</h4>
-                            <div th:if="${factura.detalles != null and !factura.detalles.empty}">
+                            <div th:if="${factura.detalleVenta != null and !factura.detalleVenta.empty}">
                                 <table class="table table-striped">
                                     <thead class="table-dark">
                                         <tr>
@@ -86,7 +95,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="item:${factura.detalles}">
+                                        <tr th:each="item:${factura.detalleVenta}">
                                             <td th:text="${item.producto.idProducto}"></td>
                                             <td th:text="${item.producto.descripcion}"></td>
                                             <td th:text="${item.cantidad}"></td>
@@ -108,7 +117,7 @@
                                        class="btn btn-warning">Pagar</a>
                                 </div>
                             </div>
-                            <div th:if="${factura.detalles == null or factura.detalles.empty}">
+                            <div th:if="${factura.detalleVenta == null or factura.detalleVenta.empty}">
                                 <p class="alert alert-warning" role="alert">No hay detalles en esta factura</p>
                             </div>
                         </div>
@@ -125,7 +134,7 @@
                             <div class="modal-header">
                                 <h5 class="model-title">Listado de Productos</h5>
                                 <button class="close" type="button" data-dismiss="modal"
-                                        aria-label="Close"
+                                            aria-label="Close"
                                         > <span aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
@@ -158,7 +167,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button id="btnCerrar" type="button" class="btn btn-warning" data-dismiss="modal">
-                                   Cerrar
+                                    Cerrar
                                 </button>
                             </div>
                         </div>
