@@ -66,6 +66,8 @@
                             <td>
                                 <a th:href="@{/editarCliente/} + ${cli.idCliente}"><i class="fas fa-user-edit"></i>Editar</a>
                                 <a th:href="@{/eliminarCliente(idCliente=${cli.idCliente})}"><i class="fas fa-user-times"></i>Eliminar</a>
+                                <a th:href="@{/facturar/} + ${cli.idCliente}"><i class="fa-solid fa-cart-plus"></i>Facturar</a>
+
                             </td>
                         </tr>
                     </tbody>

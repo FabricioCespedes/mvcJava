@@ -34,5 +34,5 @@ public interface IVentaDao extends JpaRepository<Venta, Long>{
     
     @Transactional
     @Procedure(name="[CANCELAR_FACTURA]",outputParameterName = "res")
-    Integer cancelar_factura(@Param("id_venta") Long idVenta);
+    Integer cancelar_factura(@Param("ID") Long idVenta);
 }
